@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="demosexto" defaultIdMethod="native">
+
+
+    <table name="usuarios" phpName="Usuarios">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="IdUsuarios" />
+        <column name="nombres" type="varchar" size="100" required="true" phpName="Nombres"/>
+        <column name="apellidos" type="varchar" size="100" required="true" phpName="LosApellidos"/>
+        <column name="correo" type="varchar" size="100" required="true" phpName="Correo"/>
+        <column name="telefono" type="varchar" size="15"  required="true" phpName="Telefono"/>
+        <column name="vacunado" type="ENUM" size="3" valueSet="No,Si"  required="true" phpName="EstaVacunado"/>
+        <column name="genero" type="ENUM" size="15" valueSet="Mujer,Hombre"  required="true" phpName="QueGenero"/>
+
+        <validator column="nombres">
+            <rule name="required" message="No olvides poner tu nombre"/>
+        </validator>
+
+        <validator column="apellidos">
+            <rule name="required" message="El campo APELLIDOS no puede ser vacío"/>
+        </validator>
+
+
+        <validator column="telefono">
+            <rule name="required" message="El campo TELÉFONO no puede ser vacío"/>
+            <rule name="match" value="/^\d{10}$/" message="El campo TELÉFONO debe tener exactamente 10 dígitos"/>
+            <rule name="unique" message="El número de teléfono ya está registrado con otro usuario"/>
+        </validator>
+
+
+
+        <validator column="correo">
+            <rule name="required" message="El campo CORREO ELECTRÓNICO no puede ser vacío así que ponte las pilas"/>
+            <rule name="unique" message="El CORREO ELECTRÓNICO ingresado ya está registrado con otro usuario no te hagas"/>
+            <rule name="match" value="/^([a-zA-Z0-9])+([\.a-zA-Z0-9_-])*@([a-zA-Z0-9])+(\.[a-zA-Z0-9_-]+)+$/" message="Ingrese un CORREO ELECTRÓNICO válido." />
+            <rule name="minLength" value="5" message="El CORREO ELECTRÓNICO no puede ser menor a ${value} caracteres"/>
+            <rule name="maxLength" value="150" message="El CORREO ELECTRÓNICO no puede ser mayor a ${value} caracteres"/>
+        </validator>
+
+    </table>
+
+   
+
+   <table name="productos" phpName="Productos">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="IdProductos" />
+        <column name="nombre" type="varchar" size="100" required="true" phpName="Nombre"/>
+        <column name="clasificacion" type="ENUM" size="15" valueSet="abarrotes,higiene,salchichonería,limpieza,verduras" required="true" phpName="Clasificacion"/>
+        <column name="precio_compra" type="decimal" size="50" required="true" phpName="PrecioCompra"/>
+        <column name="precio_venta" type="decimal" size="50" required="true" phpName="PrecioVenta"/>
+        <column name="stock" type="integer" required="true" phpName="Stock"/>
+
+        <validator column="nombre">
+            <rule name="required" message="Debes de Poner un Nombre"/>
+        </validator>
+
+        <validator column="precio_compra">
+            <rule name="required" message="Debes de Poner un Precio de Compra"/>
+            <rule name="minValue" value="0" message="El Precio de Compra debe ser mayor que cero"/>
+        </validator>
+
+        <validator column="precio_venta">
+            <rule name="required" message="Debes de Poner un Precio de Venta"/>
+            <rule name="minValue" value="0" message="El Precio de Venta debe ser mayor que cero"/>
+        </validator>
+
+        <validator column="stock">
+            <rule name="required" message="Debes de Poner una Cantidad en Stock"/>
+            <rule name="minValue" value="0" message="El Stock debe ser mayor o igual que cero"/>
+        </validator>
+
+
+
+    </table>
+
+   <table name="ventas" phpName="Ventas">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="IdVentas" />
+        <column name="id_usuario_comprador" type="integer" required="true" phpName="IdUsuarioComprador" />
+        <column name="fecha_venta" type="date" required="true" phpName="FechaVenta" />
+        <column name="costo_total" type="decimal" size="50" required="true" phpName="CostoTotal" />
+
+        <foreign-key foreignTable="usuarios" phpName="UsuarioComprador">
+            <reference local="id_usuario_comprador" foreign="id" />
+        </foreign-key>
+
+
+        <validator column="costo_total">
+            <rule name="required" message="El campo COSTO TOTAL no puede estar vacío"/>
+        </validator>
+
+   </table>
+
+
+
+</database>

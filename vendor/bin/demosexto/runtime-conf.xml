@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+      <config>
+        <propel>
+          <datasources default="demosexto">
+            <datasource id="demosexto">
+              <adapter>mysql</adapter> <!-- sqlite, mysql, myssql, oracle, or pgsql -->
+              <connection>
+                <dsn>mysql:host=localhost;dbname=bdpropelsexto</dsn>
+                <user>leonardo</user>
+                <password>1234</password>
+              </connection>
+            </datasource>
+          </datasources>
+        </propel>
+      </config>

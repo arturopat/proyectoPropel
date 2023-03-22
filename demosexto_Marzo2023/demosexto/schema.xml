@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="demosexto" defaultIdMethod="native">
+
+<table name="usuarios" phpName="Usuarios">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" phpName="IdUsuarios" />
+    <column name="nombres" type="varchar" size="100" required="true" phpName="Nombres"/>
+    <column name="apellidos" type="varchar" size="100" required="true" phpName="LosApellidos"/>
+    <column name="correo" type="varchar" size="100" required="true" phpName="Correo"/>
+    <column name="telefono" type="varchar" size="15"  required="true" phpName="Telefono"/>
+    <column name="vacunado" type="ENUM" size="3" valueSet="No,Si"  required="true" phpName="EstaVacunado"/>
+    <column name="genero" type="ENUM" size="15" valueSet="Mujer,Hombre"  required="true" phpName="QueGenero"/>
+
+    <validator column="nombres">
+        <rule name="required" message="No olvides poner tu nombre"/>
+    </validator>
+
+     <validator column="correo">
+      <rule name="required" message="El campo CORREO ELECTRÓNICO no puede ser vacío así que ponte las pilas"/>
+      <rule name="unique" message="El CORREO ELECTRÓNICO ingresado ya está registrado con otro usuario no te hagas"/>
+      <rule name="match" value="/^([a-zA-Z0-9])+([\.a-zA-Z0-9_-])*@([a-zA-Z0-9])+(\.[a-zA-Z0-9_-]+)+$/" message="Ingrese un CORREO ELECTRÓNICO válido." />
+      <rule name="minLength" value="5" message="El CORREO ELECTRÓNICO no puede ser menor a ${value} caracteres"/>
+      <rule name="maxLength" value="150" message="El CORREO ELECTRÓNICO no puede ser mayor a ${value} caracteres"/>
+    </validator>
+
+
+ </table>
+
+
+</database>
